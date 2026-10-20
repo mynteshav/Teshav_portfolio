@@ -1,0 +1,39 @@
+# Environment files containing secrets
+.env
+.env.local
+.env.*.local
+
+# Databases & local state
+*.db
+*.sqlite
+*.sqlite3
+contact_submissions.db
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
