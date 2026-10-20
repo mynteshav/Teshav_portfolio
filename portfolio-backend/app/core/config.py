@@ -46,6 +46,9 @@ class Settings(BaseSettings):
     SMTP_APP_PASSWORD: str = ""
     CONTACT_RECEIVER_EMAIL: str = "teshavsharma74@gmail.com"
 
+    # Resend API Configuration (HTTPS port 443 - Recommended for Render free tier)
+    RESEND_API_KEY: str = ""
+
     # Security & Rate Limiting
     RATE_LIMIT_PER_MINUTE: int = 5
     SQLITE_DB_PATH: str = "contact_submissions.db"
@@ -58,9 +61,19 @@ class Settings(BaseSettings):
         return self.ALLOWED_ORIGINS
 
     @property
+    def is_resend_configured(self) -> bool:
+        """Check if Resend HTTPS API key is provided."""
+        return bool(self.RESEND_API_KEY and self.RESEND_API_KEY.strip())
+
+    @property
     def is_smtp_configured(self) -> bool:
         """Check if SMTP credentials are provided."""
         return bool(self.SMTP_EMAIL and self.SMTP_APP_PASSWORD)
+
+    @property
+    def is_email_configured(self) -> bool:
+        """Check if either Resend API or SMTP credentials are provided."""
+        return self.is_resend_configured or self.is_smtp_configured
 
     @property
     def receiver_email(self) -> str:
