@@ -60,11 +60,14 @@ app = FastAPI(
 )
 
 # Configure CORS Middleware
+cors_origins = settings.cors_origins
+allow_all = "*" in cors_origins or settings.ENVIRONMENT == "production"
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
-    allow_credentials=True,
+    allow_origins=["*"] if allow_all else cors_origins,
+    allow_origin_regex=None if allow_all else r"^https?://.*$",
+    allow_credentials=False,
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
     expose_headers=["Retry-After"]

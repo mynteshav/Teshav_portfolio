@@ -12,94 +12,102 @@ export interface ContactSubmissionResult {
   source: 'fastapi' | 'fallback';
 }
 
+// Live production backend URL on Render
+const DEFAULT_PROD_API_URL = 'https://teshav-portfolio.onrender.com';
+
 /**
  * Modular contact form submission service.
- * Supports production and local environments via VITE_API_URL / VITE_API_BASE_URL.
+ * Ready for both local development and live cloud production on Render.
  */
 export async function sendContactMessage(
   data: ContactFormData
 ): Promise<ContactSubmissionResult> {
-  // Resolve API Base URL: checks VITE_API_URL, then VITE_API_BASE_URL, defaulting to http://localhost:8000 in dev
+  // Resolve API Base URL:
+  // 1. Explicit VITE_API_URL or VITE_API_BASE_URL (from environment or .env.production)
+  // 2. In local dev mode (import.meta.env.DEV): http://localhost:8000
+  // 3. In production builds: defaults to the live Render backend
   const rawUrl =
     import.meta.env.VITE_API_URL ||
     import.meta.env.VITE_API_BASE_URL ||
-    (import.meta.env.DEV ? 'http://localhost:8000' : '');
+    (import.meta.env.DEV ? 'http://localhost:8000' : DEFAULT_PROD_API_URL);
 
-  const apiBaseUrl = (rawUrl || '').trim().replace(/\/+$/, '');
+  const apiBaseUrl = (rawUrl || DEFAULT_PROD_API_URL).trim().replace(/\/+$/, '');
 
-  if (apiBaseUrl) {
-    try {
-      const response = await fetch(`${apiBaseUrl}/api/contact`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
+  const controller = new AbortController();
+  // Allow 60s for Render free tier spin-up from cold sleep
+  const timeoutId = setTimeout(() => controller.abort(), 60000);
 
-      const responseData = await response.json().catch(() => null);
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/contact`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify(data),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
 
-      if (!response.ok) {
-        let errorDetail = `Server returned status ${response.status}`;
+    const responseData = await response.json().catch(() => null);
 
-        if (responseData) {
-          if (Array.isArray(responseData.errors) && responseData.errors.length > 0) {
-            errorDetail = responseData.errors
-              .map((e: { field?: string; message?: string; msg?: string }) => {
-                const fieldName = e.field ? `${e.field.replace('body -> ', '')}: ` : '';
-                return `${fieldName}${e.message || e.msg || 'Invalid field'}`;
-              })
-              .join('; ');
-          } else if (typeof responseData.detail === 'string') {
-            errorDetail = responseData.detail;
-          } else if (Array.isArray(responseData.detail)) {
-            errorDetail = responseData.detail
-              .map((d: { msg?: string; message?: string }) => d.msg || d.message || JSON.stringify(d))
-              .join('; ');
-          } else if (typeof responseData.message === 'string') {
-            errorDetail = responseData.message;
-          }
+    if (!response.ok) {
+      let errorDetail = `Server returned status ${response.status}`;
+
+      if (responseData) {
+        if (Array.isArray(responseData.errors) && responseData.errors.length > 0) {
+          errorDetail = responseData.errors
+            .map((e: { field?: string; message?: string; msg?: string }) => {
+              const fieldName = e.field ? `${e.field.replace('body -> ', '')}: ` : '';
+              return `${fieldName}${e.message || e.msg || 'Invalid field'}`;
+            })
+            .join('; ');
+        } else if (typeof responseData.detail === 'string') {
+          errorDetail = responseData.detail;
+        } else if (Array.isArray(responseData.detail)) {
+          errorDetail = responseData.detail
+            .map((d: { msg?: string; message?: string }) => d.msg || d.message || JSON.stringify(d))
+            .join('; ');
+        } else if (typeof responseData.message === 'string') {
+          errorDetail = responseData.message;
         }
-
-        return {
-          success: false,
-          message: errorDetail,
-          source: 'fastapi'
-        };
-      }
-
-      return {
-        success: true,
-        message:
-          responseData?.message ||
-          'Your message has been dispatched successfully to Teshav Sharma.',
-        source: 'fastapi'
-      };
-    } catch (err: unknown) {
-      const errMessage = err instanceof Error ? err.message : 'Network error';
-      const isLocal = apiBaseUrl.includes('localhost') || apiBaseUrl.includes('127.0.0.1');
-
-      let explanation = `Could not connect to FastAPI server (${apiBaseUrl}): ${errMessage}.`;
-      if (isLocal) {
-        explanation += ' Please ensure the FastAPI backend is running (run: python run.py inside portfolio-backend).';
-      } else {
-        explanation += ' Please check your connection or send a direct email.';
       }
 
       return {
         success: false,
-        message: explanation,
+        message: errorDetail,
         source: 'fastapi'
       };
     }
-  }
 
-  // When no backend API URL is configured in production builds
-  return {
-    success: false,
-    message:
-      'Backend API endpoint is not configured (set VITE_API_URL). Please use the direct email button below.',
-    source: 'fallback'
-  };
+    return {
+      success: true,
+      message:
+        responseData?.message ||
+        'Your message has been dispatched successfully to Teshav Sharma.',
+      source: 'fastapi'
+    };
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+
+    const isAbort = err instanceof DOMException && err.name === 'AbortError';
+    const errMessage = err instanceof Error ? err.message : 'Network error';
+    const isLocal = apiBaseUrl.includes('localhost') || apiBaseUrl.includes('127.0.0.1');
+
+    let explanation = `Could not connect to FastAPI server (${apiBaseUrl}): ${errMessage}.`;
+
+    if (isAbort) {
+      explanation = `The request timed out connecting to ${apiBaseUrl}. The server is waking up from free-tier sleep mode; please try again in a few moments.`;
+    } else if (isLocal) {
+      explanation += ' Please ensure the local FastAPI backend is running (run: python run.py inside portfolio-backend).';
+    } else {
+      explanation += ' The server may be waking up from sleep mode (Render free tier spin-up can take ~45s). Please try again in a few moments or email directly.';
+    }
+
+    return {
+      success: false,
+      message: explanation,
+      source: 'fastapi'
+    };
+  }
 }
