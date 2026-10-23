@@ -1,7 +1,8 @@
 import React from 'react';
-import { GraduationCap, Calendar, CheckCircle2, Award } from 'lucide-react';
+import { GraduationCap, Calendar, CheckCircle2, Award, ExternalLink } from 'lucide-react';
 import { SectionHeading } from '../components/SectionHeading';
 import { educationData } from '../data/education';
+import { certificationsData } from '../data/certifications';
 
 export const Education: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ export const Education: React.FC = () => {
           subtitle="A structured educational pathway specializing in Computer Applications, Machine Learning, and Data Science."
         />
 
+        {/* Education Degree Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
           {educationData.map((item) => (
             <div
@@ -24,20 +26,27 @@ export const Education: React.FC = () => {
                   <div className="w-12 h-12 rounded-xl bg-dark-800 border border-slate-700/70 flex items-center justify-center text-sky-400 group-hover:border-sky-500/40 transition-colors">
                     <GraduationCap className="w-6 h-6" />
                   </div>
-                  <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono border ${
-                      item.status === 'In Progress'
-                        ? 'border-sky-500/30 bg-sky-500/10 text-sky-300'
-                        : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-                    }`}
-                  >
+                  <div className="flex items-center gap-2">
+                    {item.cgpa && (
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-sky-500/15 border border-sky-500/30 text-sky-300">
+                        {item.cgpa}
+                      </span>
+                    )}
                     <span
-                      className={`w-1.5 h-1.5 rounded-full ${
-                        item.status === 'In Progress' ? 'bg-sky-400 animate-pulse' : 'bg-emerald-400'
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono border ${
+                        item.status === 'In Progress'
+                          ? 'border-sky-500/30 bg-sky-500/10 text-sky-300'
+                          : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
                       }`}
-                    ></span>
-                    {item.status}
-                  </span>
+                    >
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          item.status === 'In Progress' ? 'bg-sky-400 animate-pulse' : 'bg-emerald-400'
+                        }`}
+                      ></span>
+                      {item.status}
+                    </span>
+                  </div>
                 </div>
 
                 <h3 className="text-xl font-bold text-white tracking-tight mb-1 group-hover:text-sky-300 transition-colors">
@@ -73,6 +82,56 @@ export const Education: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Verified Industry Certifications Showcase */}
+        <div className="mt-14 pt-12 border-t border-slate-800/80">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-amber-400 mb-1">
+                <Award className="w-3.5 h-3.5" />
+                <span>Verified Credentials</span>
+              </div>
+              <h3 className="text-2xl font-bold text-white tracking-tight">
+                Industry Certifications & Accreditations
+              </h3>
+            </div>
+            <p className="text-xs text-slate-400 font-mono">
+              7 Programs &bull; Click to verify credential
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {certificationsData.map((cert) => (
+              <a
+                key={cert.id}
+                href={cert.verificationUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group p-4 rounded-xl bg-gradient-to-b from-dark-850 to-dark-900 border border-slate-800/90 hover:border-sky-500/40 hover:bg-dark-800/90 transition-all duration-300 flex flex-col justify-between shadow-sm cursor-pointer"
+                title={`Verify ${cert.title} on ${cert.issuer}`}
+              >
+                <div>
+                  <div className="flex items-center justify-between text-xs font-mono text-sky-400 mb-2">
+                    <span className="px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 text-[11px] font-semibold">
+                      {cert.issuer}
+                    </span>
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-sky-400 transition-colors" />
+                  </div>
+                  <h4 className="text-sm font-semibold text-slate-200 group-hover:text-white transition-colors leading-snug">
+                    {cert.title}
+                  </h4>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
+                  <span>{cert.category || 'Certification'}</span>
+                  <span className="text-sky-400 font-medium group-hover:underline inline-flex items-center gap-0.5">
+                    Verify &rarr;
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   );

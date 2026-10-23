@@ -65,5 +65,15 @@ export interface EducationItem {
   institution: string;
   period: string;
   status: 'In Progress' | 'Completed';
+  cgpa?: string;
   highlights?: string[];
 }
+
+export interface CertificationItem {
+  id: string;
+  title: string;
+  issuer: string;
+  verificationUrl: string;
+  category?: string;
+}
+

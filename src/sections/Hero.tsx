@@ -1,11 +1,15 @@
 import React from 'react';
-import { ArrowRight, Mail, Sparkles, Terminal, Cpu, Database, Network, ExternalLink } from 'lucide-react';
+import { ArrowRight, Mail, Sparkles, Terminal, Cpu, Database, Network, ExternalLink, FileText } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/SocialIcons';
 import { profileData } from '../data/profile';
 import { quickHeroSkills } from '../data/skills';
 import profileImg from '../assets/profile.png';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onResumeClick?: () => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onResumeClick }) => {
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -96,6 +100,16 @@ export const Hero: React.FC = () => {
                   </a>
                 </div>
 
+                {/* Quick Resume View Action inside Frame */}
+                <button
+                  type="button"
+                  onClick={onResumeClick}
+                  className="mt-2.5 w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 hover:border-sky-400/60 text-sky-300 hover:text-white transition-all text-xs font-semibold cursor-pointer group/res"
+                >
+                  <FileText className="w-3.5 h-3.5 text-sky-400 group-hover/res:scale-110 transition-transform" />
+                  <span>Preview Resume (PDF)</span>
+                </button>
+
               </div>
             </div>
           </div>
@@ -122,20 +136,29 @@ export const Hero: React.FC = () => {
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 mb-8">
               <button
                 onClick={() => scrollTo('projects')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:via-blue-500 hover:to-indigo-500 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all duration-300 group cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:via-blue-500 hover:to-indigo-500 shadow-lg shadow-sky-500/20 hover:shadow-sky-500/30 transition-all duration-300 group cursor-pointer"
               >
                 <span>Explore My Work</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <button
-                onClick={() => scrollTo('contact')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-semibold text-sm text-slate-200 bg-dark-850/90 hover:bg-dark-800 border border-slate-700/80 hover:border-sky-500/40 hover:text-white transition-all duration-200 shadow-sm cursor-pointer"
+                onClick={onResumeClick}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-sky-300 bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 hover:border-sky-400/60 shadow-sm transition-all duration-200 cursor-pointer group"
+                title="View Resume"
               >
-                <Mail className="w-4 h-4 text-sky-400" />
+                <FileText className="w-4 h-4 text-sky-400 group-hover:scale-110 transition-transform" />
+                <span>View Resume</span>
+              </button>
+
+              <button
+                onClick={() => scrollTo('contact')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-slate-300 bg-dark-850/90 hover:bg-dark-800 border border-slate-700/80 hover:border-slate-600 hover:text-white transition-all duration-200 shadow-sm cursor-pointer"
+              >
+                <Mail className="w-4 h-4 text-slate-400" />
                 <span>Let's Connect</span>
               </button>
             </div>

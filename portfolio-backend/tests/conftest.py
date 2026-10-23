@@ -12,12 +12,16 @@ from app.services.storage_service import init_db
 def setup_test_environment(tmp_path):
     """
     Configure a temporary isolated SQLite database and reset rate limiter before each test.
+    Also ensures tests don't make live external calls via Resend API key.
     """
     test_db = tmp_path / "test_submissions.db"
     settings.SQLITE_DB_PATH = str(test_db)
     init_db()
     rate_limiter.reset()
+    orig_resend = settings.RESEND_API_KEY
+    settings.RESEND_API_KEY = ""
     yield
+    settings.RESEND_API_KEY = orig_resend
     rate_limiter.reset()
 
 

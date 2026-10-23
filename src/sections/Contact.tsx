@@ -10,7 +10,8 @@ import {
   ExternalLink,
   Loader2,
   FileText,
-  Download
+  Download,
+  Eye
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../components/SocialIcons';
 import { SectionHeading } from '../components/SectionHeading';
@@ -25,7 +26,11 @@ interface FormErrors {
   message?: string;
 }
 
-export const Contact: React.FC = () => {
+interface ContactProps {
+  onResumeClick?: () => void;
+}
+
+export const Contact: React.FC<ContactProps> = ({ onResumeClick }) => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -205,28 +210,44 @@ export const Contact: React.FC = () => {
                 </div>
               </div>
 
-              {/* Resume PDF Download Card */}
-              <a
-                href={profileData.resumeUrl}
-                download="Teshav_Sharma_Resume.pdf"
-                className="p-4 rounded-xl bg-dark-900 border border-slate-800 hover:border-sky-500/40 flex items-center justify-between gap-3 group transition-all"
-                title="Download Teshav Sharma Resume (PDF)"
-              >
+              {/* Resume Card with Dual Action (Preview + Download) */}
+              <div className="p-4 rounded-xl bg-dark-900 border border-slate-800 hover:border-sky-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 group transition-all">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 shrink-0 group-hover:scale-105 transition-transform">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">
-                      Official Resume
+                      Official Curriculum Vitae
                     </div>
-                    <div className="text-sm font-semibold text-white group-hover:text-sky-300 transition-colors">
-                      Download Resume (PDF)
+                    <div className="text-sm font-semibold text-white">
+                      Teshav Sharma Resume
                     </div>
                   </div>
                 </div>
-                <Download className="w-4 h-4 text-slate-400 group-hover:text-sky-400 transition-colors" />
-              </a>
+                <div className="flex items-center gap-2 self-end sm:self-auto">
+                  {onResumeClick && (
+                    <button
+                      type="button"
+                      onClick={onResumeClick}
+                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-800 hover:bg-dark-750 text-slate-300 hover:text-white border border-slate-700 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                      title="Preview Resume in browser"
+                    >
+                      <Eye className="w-3.5 h-3.5 text-sky-400" />
+                      <span>Preview</span>
+                    </button>
+                  )}
+                  <a
+                    href={profileData.resumeUrl}
+                    download="Teshav_Sharma_Resume.pdf"
+                    className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border border-sky-500/30 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                    title="Download Teshav Sharma Resume (PDF)"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download</span>
+                  </a>
+                </div>
+              </div>
 
               {/* Social Profiles */}
               <div className="pt-2">

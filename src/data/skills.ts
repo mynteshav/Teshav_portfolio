@@ -30,6 +30,7 @@ export const skillCategories: SkillCategory[] = [
       'Clustering',
       'Random Forest',
       'XGBoost',
+      'CatBoost',
       'Model Evaluation'
     ]
   },
@@ -46,7 +47,8 @@ export const skillCategories: SkillCategory[] = [
       'Tokenization',
       'TF-IDF',
       'Sentence Transformers',
-      'Sentiment Analysis'
+      'Sentiment Analysis',
+      'NLTK'
     ]
   },
   {

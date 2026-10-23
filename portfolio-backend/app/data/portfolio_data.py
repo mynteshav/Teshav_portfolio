@@ -72,7 +72,9 @@ PROJECTS_DATA = [
             "FastAPI Microservice: Exposes RESTful endpoints for analysis and roadmap generation",
             "Docker Packaging: Isolated reproducible environment for fast local and server deployment"
         ],
-        "isFeatured": True
+        "isFeatured": True,
+        "demoUrl": "https://ai-career-intelligence-platform-aouhoykvy2e7z59j2ht6qz.streamlit.app/",
+        "githubUrl": "https://github.com/mynteshav"
     },
     {
         "id": "flipkart-pricing-strategy",
@@ -96,7 +98,8 @@ PROJECTS_DATA = [
             {"label": "R² Score", "value": "0.61"},
             {"label": "Reported RMSE", "value": "₹26,402"}
         ],
-        "isFeatured": True
+        "isFeatured": True,
+        "githubUrl": "https://github.com/mynteshav/Flipkart-product-pricing/blob/main/flipkart-product-pricing-strategy-using-regression.ipynb"
     },
     {
         "id": "powerbi-job-market-dashboard",
@@ -119,7 +122,8 @@ PROJECTS_DATA = [
             {"label": "KPI Engine", "value": "Custom DAX"},
             {"label": "Platform", "value": "Power BI"}
         ],
-        "isFeatured": True
+        "isFeatured": True,
+        "githubUrl": "https://github.com/mynteshav/Job-Market-Salary-Trends-Dashboard-Power-BI-/blob/main/images/screenshot_dashboard.PNG"
     },
     {
         "id": "predict-calorie-expenditure",
@@ -176,6 +180,7 @@ SKILLS_DATA = [
             "Clustering",
             "Random Forest",
             "XGBoost",
+            "CatBoost",
             "Model Evaluation"
         ]
     },
@@ -192,7 +197,8 @@ SKILLS_DATA = [
             "Tokenization",
             "TF-IDF",
             "Sentence Transformers",
-            "Sentiment Analysis"
+            "Sentiment Analysis",
+            "NLTK"
         ]
     },
     {
@@ -243,25 +249,27 @@ EXPERIENCE_DATA = [
         "id": "exp-codeclause",
         "role": "Data Science Intern",
         "company": "CodeClause",
-        "period": "June 2023 – July 2023",
+        "location": "Remote",
+        "period": "Jun 2023 – Jul 2023",
         "description": [
-            "Developed customer segmentation pipelines applying K-Means clustering algorithms on consumer behavioral data.",
-            "Conducted exploratory data analysis (EDA), feature preprocessing, and correlation studies to derive cluster personas.",
-            "Evaluated optimal cluster counts using elbow method analysis and silhouette scoring."
+            "Designed and executed a customer segmentation analysis using K-Means clustering, leveraging data from over 1 million mall visitors.",
+            "Created interactive visualizations using Matplotlib and Seaborn, enabling a 10% boost in targeted marketing efficiency.",
+            "Performed efficient data preprocessing using Pandas and NumPy, reducing data handling time by 30%."
         ],
-        "technologies": ["Python", "Machine Learning", "K-Means Clustering", "Pandas", "Scikit-learn", "Matplotlib"]
+        "technologies": ["Python", "K-Means Clustering", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Scikit-learn"]
     },
     {
         "id": "exp-response-infoway",
         "role": "Application Developer Intern",
         "company": "Response Infoway",
-        "period": "May 2023 – July 2023",
+        "location": "Jaipur, India",
+        "period": "May 2023 – Jul 2023",
         "description": [
-            "Contributed to the design and development of an OpenCV-based real-time object detection system.",
-            "Utilized SQL database queries and structured schemas for efficient application data storage and retrieval.",
-            "Collaborated on core application development workflows, debugging, and software integration."
+            "Engineered an object detection system using Python and OpenCV, reducing detection latency by 15%.",
+            "Collaborated with cross-functional teams using Git for version control and efficient development workflows.",
+            "Optimized SQL queries for application data retrieval and processing, improving data handling efficiency by 10%."
         ],
-        "technologies": ["Python", "OpenCV", "SQL", "Computer Vision", "Application Development"]
+        "technologies": ["Python", "OpenCV", "SQL", "Git", "Computer Vision"]
     }
 ]
 
@@ -271,23 +279,25 @@ EDUCATION_DATA = [
         "degree": "Master of Computer Applications (MCA)",
         "field": "Artificial Intelligence & Data Science",
         "institution": "JECRC University",
-        "period": "Currently Pursuing",
+        "period": "Jul 2025 – Present",
         "status": "In Progress",
+        "cgpa": "CGPA: 8.52 / 10.00",
         "highlights": [
-            "Advanced coursework in Machine Learning, Deep Learning, Natural Language Processing, and Big Data Architecture",
-            "Hands-on research and engineering with Generative AI models, RAG frameworks, and neural network optimization"
+            "Advanced coursework in Machine Learning, Deep Learning, Natural Language Processing, and Generative AI",
+            "Hands-on research and engineering with LLMs, RAG frameworks, and neural network optimization"
         ]
     },
     {
         "id": "edu-poornima",
         "degree": "Bachelor of Computer Applications (BCA)",
-        "field": "Computer Applications & Software Systems",
+        "field": "Computer Applications",
         "institution": "Poornima University",
-        "period": "Graduated 2024",
+        "period": "Aug 2021 – Jul 2024",
         "status": "Completed",
+        "cgpa": "CGPA: 7.36 / 10.00",
         "highlights": [
-            "Core foundations in Computer Science, Database Management Systems (DBMS), Object-Oriented Programming, and Data Structures",
-            "Software engineering principles, algorithmic problem solving, and Python programming foundations"
+            "Core foundations in Computer Science, Database Management Systems (DBMS), and Data Structures",
+            "Object-Oriented Programming, algorithmic problem solving, and Python programming foundations"
         ]
     }
 ]

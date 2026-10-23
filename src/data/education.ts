@@ -5,24 +5,26 @@ export const educationData: EducationItem[] = [
     id: 'edu-jecrc',
     degree: 'Master of Computer Applications (MCA)',
     field: 'Artificial Intelligence & Data Science',
-    institution: 'JECRC University',
-    period: 'Currently Pursuing',
+    institution: 'JECRC University, Jaipur, Rajasthan',
+    period: 'Jul 2025 – Present',
     status: 'In Progress',
+    cgpa: 'CGPA: 8.52 / 10.00',
     highlights: [
-      'Advanced coursework in Machine Learning, Deep Learning, Natural Language Processing, and Big Data Architecture',
-      'Hands-on research and engineering with Generative AI models, RAG frameworks, and neural network optimization'
+      'Advanced coursework in Machine Learning, Deep Learning, Natural Language Processing, and Generative AI',
+      'Hands-on research and engineering with LLMs, RAG frameworks, and neural network optimization'
     ]
   },
   {
     id: 'edu-poornima',
     degree: 'Bachelor of Computer Applications (BCA)',
-    field: 'Computer Applications & Software Systems',
-    institution: 'Poornima University',
-    period: 'Graduated 2024',
+    field: 'Computer Applications',
+    institution: 'Poornima University, Jaipur, Rajasthan',
+    period: 'Aug 2021 – Jul 2024',
     status: 'Completed',
+    cgpa: 'CGPA: 7.36 / 10.00',
     highlights: [
-      'Core foundations in Computer Science, Database Management Systems (DBMS), Object-Oriented Programming, and Data Structures',
-      'Software engineering principles, algorithmic problem solving, and Python programming foundations'
+      'Core foundations in Computer Science, Database Management Systems (DBMS), and Data Structures',
+      'Object-Oriented Programming, algorithmic problem solving, and Python programming foundations'
     ]
   }
 ];

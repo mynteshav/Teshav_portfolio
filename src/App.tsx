@@ -24,17 +24,17 @@ export const App: React.FC = () => {
 
       {/* Main content sections */}
       <main className="relative z-10">
-        <Hero />
+        <Hero onResumeClick={() => setIsResumeOpen(true)} />
         <About />
         <Skills />
         <Projects />
         <Experience />
         <Education />
-        <Contact />
+        <Contact onResumeClick={() => setIsResumeOpen(true)} />
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onResumeClick={() => setIsResumeOpen(true)} />
 
       {/* Modal for viewing/requesting curriculum vitae */}
       <ResumeModal

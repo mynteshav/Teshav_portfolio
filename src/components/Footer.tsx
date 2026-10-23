@@ -1,11 +1,15 @@
 import React from 'react';
-import { ArrowUp, Mail, Heart } from 'lucide-react';
+import { ArrowUp, Mail, Heart, FileText } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './SocialIcons';
 import { profileData } from '../data/profile';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onResumeClick?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onResumeClick }) => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -108,6 +112,17 @@ export const Footer: React.FC = () => {
                   </a>
                 </li>
               ))}
+              {onResumeClick && (
+                <li>
+                  <button
+                    onClick={onResumeClick}
+                    className="text-sm text-slate-400 hover:text-sky-400 transition-colors inline-flex items-center gap-1.5 cursor-pointer text-left"
+                  >
+                    <FileText className="w-3.5 h-3.5 text-sky-400" />
+                    <span>View Resume (PDF)</span>
+                  </button>
+                </li>
+              )}
               <li>
                 <a
                   href="#contact"

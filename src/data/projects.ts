@@ -28,8 +28,9 @@ export const projectsData: Project[] = [
       'FastAPI Microservice: Exposes RESTful endpoints for analysis and roadmap generation',
       'Docker Packaging: Isolated reproducible environment for fast local and server deployment'
     ],
-    isFeatured: true
-    // githubUrl & demoUrl left undefined unless provided by user; UI gracefully displays "Repository / Demo on request"
+    isFeatured: true,
+    demoUrl: 'https://ai-career-intelligence-platform-aouhoykvy2e7z59j2ht6qz.streamlit.app/',
+    githubUrl: 'https://github.com/mynteshav'
   },
   {
     id: 'flipkart-pricing-strategy',
@@ -57,7 +58,8 @@ export const projectsData: Project[] = [
       { label: 'R² Score', value: '0.61' },
       { label: 'Reported RMSE', value: '₹26,402' }
     ],
-    isFeatured: true
+    isFeatured: true,
+    githubUrl: 'https://github.com/mynteshav/Flipkart-product-pricing/blob/main/flipkart-product-pricing-strategy-using-regression.ipynb'
   },
   {
     id: 'powerbi-job-market-dashboard',
@@ -84,7 +86,8 @@ export const projectsData: Project[] = [
       { label: 'KPI Engine', value: 'Custom DAX' },
       { label: 'Platform', value: 'Power BI' }
     ],
-    isFeatured: true
+    isFeatured: true,
+    githubUrl: 'https://github.com/mynteshav/Job-Market-Salary-Trends-Dashboard-Power-BI-/blob/main/images/screenshot_dashboard.PNG'
   },
   {
     id: 'predict-calorie-expenditure',

@@ -1,7 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { X, FileText, Download, ExternalLink, GraduationCap, Briefcase, Award, Eye, ListFilter, Sparkles } from 'lucide-react';
+import {
+  X,
+  FileText,
+  Download,
+  ExternalLink,
+  GraduationCap,
+  Briefcase,
+  Award,
+  Eye,
+  ListFilter,
+  Sparkles,
+  MapPin,
+  Mail,
+  CheckCircle2
+} from 'lucide-react';
 import { profileData } from '../data/profile';
 import { experienceData } from '../data/experience';
+import { educationData } from '../data/education';
+import { certificationsData } from '../data/certifications';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -44,7 +60,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:px-7 border-b border-slate-800 bg-dark-950/60">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 sm:px-7 border-b border-slate-800 bg-dark-950/70">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 shrink-0">
               <FileText className="w-5 h-5" />
@@ -56,8 +72,10 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                   Verified PDF
                 </span>
               </h3>
-              <p className="text-xs font-mono text-slate-400">
-                Official Curriculum Vitae &bull; AI / ML Engineer
+              <p className="text-xs font-mono text-slate-400 flex items-center gap-2">
+                <span>Official Curriculum Vitae</span>
+                <span>&bull;</span>
+                <span className="text-sky-300">AI / ML Engineer</span>
               </p>
             </div>
           </div>
@@ -89,7 +107,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             {/* Close Modal */}
             <button
               onClick={onClose}
-              className="p-2 rounded-xl bg-dark-800 border border-slate-700 text-slate-400 hover:text-white hover:bg-dark-750 transition-colors ml-1"
+              className="p-2 rounded-xl bg-dark-800 border border-slate-700 text-slate-400 hover:text-white hover:bg-dark-750 transition-colors ml-1 cursor-pointer"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -102,7 +120,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           <div className="flex items-center gap-1 bg-dark-900 p-1 rounded-xl border border-slate-800">
             <button
               onClick={() => setActiveTab('preview')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
                 activeTab === 'preview'
                   ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30'
                   : 'text-slate-400 hover:text-slate-200'
@@ -113,7 +131,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </button>
             <button
               onClick={() => setActiveTab('structured')}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg font-medium transition-all cursor-pointer ${
                 activeTab === 'structured'
                   ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30'
                   : 'text-slate-400 hover:text-slate-200'
@@ -124,8 +142,9 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </button>
           </div>
 
-          <div className="text-slate-400 text-[11px] font-mono hidden sm:block">
-            Updated Oct 2026 &bull; PDF format
+          <div className="text-slate-400 text-[11px] font-mono hidden sm:flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            <span>Live Document &bull; Teshav Sharma</span>
           </div>
         </div>
 
@@ -133,27 +152,75 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           {activeTab === 'preview' ? (
             /* Embedded PDF Document Preview */
-            <div className="w-full h-[68vh] min-h-[450px] rounded-xl overflow-hidden border border-slate-700/80 bg-dark-950 relative shadow-inner">
+            <div className="w-full h-[68vh] min-h-[460px] rounded-xl overflow-hidden border border-slate-700/80 bg-dark-950 relative shadow-inner flex flex-col">
               <iframe
                 src={`${pdfUrl}#toolbar=0&navpanes=0`}
                 title="Teshav Sharma Resume PDF"
-                className="w-full h-full border-none"
+                className="w-full h-full flex-1 border-none"
               />
-              <div className="absolute bottom-3 right-3 sm:hidden">
-                <a
-                  href={pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-dark-900/90 text-[11px] font-medium text-sky-400 border border-slate-700 shadow-md flex items-center gap-1"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  <span>Open Fullscreen</span>
-                </a>
+              <div className="p-3 bg-dark-950/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <span className="font-mono text-[11px]">
+                  Viewing Teshav_Sharma_Resume.pdf
+                </span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300 font-medium"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Fullscreen</span>
+                  </a>
+                  <span>&bull;</span>
+                  <a
+                    href={pdfUrl}
+                    download="Teshav_Sharma_Resume.pdf"
+                    className="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300 font-medium"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download</span>
+                  </a>
+                </div>
               </div>
             </div>
           ) : (
             /* Structured Resume Overview */
             <div className="space-y-6">
+              {/* Header Contact Strip */}
+              <div className="p-4 rounded-xl bg-dark-850/80 border border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div className="flex items-center gap-2 text-slate-300">
+                  <Mail className="w-3.5 h-3.5 text-sky-400" />
+                  <a href={`mailto:${profileData.email}`} className="hover:text-sky-300 transition-colors">
+                    {profileData.email}
+                  </a>
+                </div>
+                <div className="flex items-center gap-2 text-slate-300">
+                  <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Jaipur, Rajasthan, India</span>
+                </div>
+                <div className="flex items-center gap-3 font-mono text-[11px]">
+                  <a
+                    href={profileData.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sky-400 hover:underline flex items-center gap-1"
+                  >
+                    <span>github.com/mynteshav</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                  <a
+                    href={profileData.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sky-400 hover:underline flex items-center gap-1"
+                  >
+                    <span>linkedin.com/in/teshavds</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
               {/* Summary Box */}
               <div className="p-4 sm:p-5 rounded-xl bg-dark-850 border border-slate-800">
                 <h4 className="text-xs font-mono uppercase tracking-wider text-sky-400 mb-2 font-semibold flex items-center gap-1.5">
@@ -172,27 +239,22 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                   <span>Academic Credentials</span>
                 </h4>
                 <div className="space-y-3">
-                  <div className="p-3.5 rounded-xl bg-dark-850/80 border border-slate-800">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-white">JECRC University, Jaipur</span>
-                      <span className="font-mono text-sky-400 font-medium">CGPA: 8.52 / 10.00</span>
+                  {educationData.map((item) => (
+                    <div key={item.id} className="p-3.5 rounded-xl bg-dark-850/80 border border-slate-800">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
+                        <span className="font-bold text-white">{item.institution}</span>
+                        {item.cgpa && (
+                          <span className="font-mono text-sky-400 font-semibold px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 w-fit">
+                            {item.cgpa}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs sm:text-sm text-sky-300 mt-1 font-medium">
+                        {item.degree} — {item.field}
+                      </div>
+                      <div className="text-xs text-slate-400 font-mono mt-0.5">{item.period}</div>
                     </div>
-                    <div className="text-xs sm:text-sm text-sky-300 mt-0.5">
-                      Master of Computer Applications (MCA) — Artificial Intelligence & Data Science
-                    </div>
-                    <div className="text-xs text-slate-400 font-mono mt-0.5">Jul 2025 – Present</div>
-                  </div>
-
-                  <div className="p-3.5 rounded-xl bg-dark-850/80 border border-slate-800">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-white">Poornima University, Jaipur</span>
-                      <span className="font-mono text-emerald-400 font-medium">CGPA: 7.36 / 10.00</span>
-                    </div>
-                    <div className="text-xs sm:text-sm text-slate-200 mt-0.5">
-                      Bachelor of Computer Applications (BCA)
-                    </div>
-                    <div className="text-xs text-slate-400 font-mono mt-0.5">Aug 2021 – Jul 2024</div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -205,14 +267,18 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 <div className="space-y-3">
                   {experienceData.map((exp) => (
                     <div key={exp.id} className="p-3.5 rounded-xl bg-dark-850/80 border border-slate-800">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-bold text-white">{exp.role} &bull; {exp.company}</span>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
+                        <span className="font-bold text-white">
+                          {exp.role} &bull; {exp.company}
+                          {exp.location && <span className="text-slate-400 font-normal"> ({exp.location})</span>}
+                        </span>
                         <span className="font-mono text-slate-400">{exp.period}</span>
                       </div>
-                      <ul className="mt-2 space-y-1">
+                      <ul className="mt-2.5 space-y-1.5">
                         {exp.description.map((desc, idx) => (
-                          <li key={idx} className="text-xs text-slate-300 list-disc list-inside">
-                            {desc}
+                          <li key={idx} className="text-xs text-slate-300 flex items-start gap-2 leading-relaxed">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-sky-400/80 shrink-0 mt-0.5" />
+                            <span>{desc}</span>
                           </li>
                         ))}
                       </ul>
@@ -221,31 +287,34 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 </div>
               </div>
 
-              {/* Certifications Highlights */}
+              {/* Verified Certifications Highlights */}
               <div>
                 <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2 font-semibold">
                   <Award className="w-4 h-4 text-amber-400" />
-                  <span>Certifications</span>
+                  <span>Verified Industry Certifications</span>
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-300">
-                  <div className="p-2.5 rounded-lg bg-dark-850/60 border border-slate-800">
-                    &bull; Complete Data Science, ML, DL & NLP Bootcamp (Udemy)
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-dark-850/60 border border-slate-800">
-                    &bull; AI & Data Scientist Certification (OneRoadmap)
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-dark-850/60 border border-slate-800">
-                    &bull; Data Analytics Job Simulation (Deloitte / Forage)
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-dark-850/60 border border-slate-800">
-                    &bull; Python for Data Science & MySQL (Infosys Springboard)
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-dark-850/60 border border-slate-800">
-                    &bull; SQL (Intermediate) Certification (HackerRank)
-                  </div>
-                  <div className="p-2.5 rounded-lg bg-dark-850/60 border border-slate-800">
-                    &bull; Becoming a Data Analyst Using Python (Udemy)
-                  </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {certificationsData.map((cert) => (
+                    <a
+                      key={cert.id}
+                      href={cert.verificationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-3 rounded-xl bg-dark-850/70 border border-slate-800 hover:border-sky-500/40 hover:bg-dark-800/90 transition-all flex flex-col justify-between group"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between text-[11px] font-mono text-sky-400 mb-1">
+                          <span>{cert.issuer}</span>
+                          <span className="inline-flex items-center gap-1 text-[10px] text-slate-400 group-hover:text-sky-300">
+                            Verify <ExternalLink className="w-2.5 h-2.5" />
+                          </span>
+                        </div>
+                        <div className="text-xs font-medium text-slate-200 group-hover:text-white leading-snug">
+                          {cert.title}
+                        </div>
+                      </div>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -261,14 +330,14 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <a
               href={pdfUrl}
               download="Teshav_Sharma_Resume.pdf"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-400 text-white transition-colors"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-sky-500 hover:bg-sky-400 text-white transition-colors cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download PDF</span>
             </a>
             <button
               onClick={onClose}
-              className="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-semibold bg-dark-800 hover:bg-dark-750 border border-slate-700 text-slate-300 hover:text-white transition-colors"
+              className="flex-1 sm:flex-none px-4 py-2 rounded-xl text-xs font-semibold bg-dark-800 hover:bg-dark-750 border border-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
             >
               Close
             </button>
