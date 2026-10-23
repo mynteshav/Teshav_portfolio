@@ -21,7 +21,7 @@ async def get_projects(
 
     if category:
         category_lower = category.lower()
-        projects = [p for p in projects if p.get("category", "").lower() == category_lower]
+        projects = [p for p in projects if str(p.get("category", "")).lower() == category_lower]
 
     return {
         "success": True,
